@@ -1,23 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import "primeflex/primeflex.css";
+import "primeicons/primeicons.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/saga-purple/theme.css";
+import {BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { Change, Forgot, Login, Register,  } from "./func/index";
+import React from "react";
+import Navbar from "./func/services/Navbar";
+import Protected from "./func/services/Protected";
+import { AuthContextProvider } from "./func/AuthContext";
+import Account from "./func/services/Account";
+import Home from "./func/services/Home";
+// import Signin from "./func/services/Signin";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AuthContextProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/change" element={<Change />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/account"
+              element={
+                <Protected>
+                  <Account />
+                </Protected>
+              }
+            />
+          </Routes>
+        </Router>
+      </AuthContextProvider>
     </div>
   );
 }
